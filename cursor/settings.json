@@ -1,4 +1,4 @@
-// cmd shift p - preferences: open user settings (json)
+// cmd shift p - preferences: open user settings (json) based on https://github.com/nexxeln/dots/blob/main/Library/Application%20Support/Code%20-%20Insiders/User/settings.json
 
 /* {
     "security.promptForLocalFileProtocolHandling": false,
@@ -46,7 +46,7 @@
 	//     title bar
 	"window.title": "${dirty}${rootName}${separator}${activeEditorShort}",
 	"vim.leader": "<space>",
-	"vim.normalModeKeyBindingsNonRecursive": [
+	"vim.normalModeKeyBindings": [
 		{
 			"before": ["<c-]>"],
 			"commands": ["editor.action.marker.next"]
@@ -78,7 +78,7 @@
 	],
 
 	//     top bar
-	"workbench.editor.showTabs": true, // hide tabs (off)
+	"workbench.editor.showTabs": true, // hide tabs
 	"breadcrumbs.enabled": false, // hides breadcrumb path at top of window
 	"window.commandCenter": false, // hides command center at the top of the window. Use cmd+shift+p instead
 	"workbench.layoutControl.enabled": false, // hides those little squares on the top right of the window
@@ -103,40 +103,107 @@
 
 	//   Theme
 	"workbench.iconTheme": "chalice-icon-theme",
-	"workbench.colorTheme": "Vesper",
+	"workbench.colorTheme": "Catppuccin Dark Theme",
 	//     Overrides vesper theme start
 	"workbench.colorCustomizations": {
 		"editorGutter.addedBackground": "#A0A0A0",
 		"editorGutter.deletedBackground": "#A0A0A0",
 		"editorGutter.modifiedBackground": "#A0A0A0"
 	},
+	"editor.semanticTokenColorCustomizations": {
+		"enabled": true,
+		"rules": {
+			"type": "#8FBCBB" // nord7
+		}
+	},
 	"editor.tokenColorCustomizations": {
 		"textMateRules": [
-			// remove peppermint flavor
 			{
-				"name": "String, Symbols, Inherited Class",
+				"name": "Type parameters",
+				"scope": ["entity.name.type.parameter", "variable.type.declaration"],
+				"settings": {
+					"foreground": "#8FBCBB" // nord7
+				}
+			},
+			{
+				"name": "TypeScript primitive types",
+				"scope": ["support.type.primitive.tsx", "support.type.primitive.ts"],
+				"settings": {
+					"foreground": "#8FBCBB" // nord7
+				}
+			},
+			{
+				"name": "Constants and readonly variables",
+				"scope": ["variable.other.constant.object.tsx", "variable.other.constant"],
+				"settings": {
+					"foreground": "#8FBCBB" // nord7
+				}
+			},
+			{
+				"name": "Function keyword",
+				"scope": ["storage.type.function.tsx", "storage.type.function.ts"],
+				"settings": {
+					"foreground": "#7e92c5" // nord4: light grey
+				}
+			},
+			{
+				"name": "Variables",
+				"scope": ["variable.other"],
+				"settings": {
+					"foreground": "#7e92c5" // nord4: for variables like debouncedValue
+				}
+			},
+			{
+				"name": "Class keyword",
+				"scope": ["storage.type.class.tsx", "storage.type.class.ts"],
+				"settings": {
+					"foreground": "#c1c1c1" // nord4: light grey
+				}
+			},
+			{
+				"name": "Constants",
+				"scope": ["storage.type.tsx"],
+				"settings": {
+					"foreground": "#7e92c5" // nord4: for constants like PI
+				}
+			},
+			{
+				"name": "Control flow keywords",
 				"scope": [
-					"string",
-					"constant.other.symbol",
-					"constant.other.key",
-					"meta.group.braces.curly constant.other.object.key.js string.unquoted.label.js"
+					"keyword.control.flow.tsx",
+					"keyword.control.flow.ts",
+					"keyword.control.import.tsx",
+					"keyword.control.import.ts",
+					"keyword.control.from.tsx",
+					"keyword.control.from.ts",
+					"storage.modifier.tsx",
+					"storage.modifier.ts",
+					"storage.type.type.tsx",
+					"storage.type.type.ts",
+					"variable.language.this",
+					"variable.language.super",
+					"variable.language.static",
+					"variable.language.private",
+					"variable.language.protected",
+					"variable.language.public",
+					"variable.language.static",
+					"variable.language.private",
+					"punctuation.definition.block.tsx",
+					"punctuation.definition.block.ts",
+					"punctuation.definition.parameters.start.tsx",
+					"punctuation.definition.parameters.start.ts",
+					"punctuation.definition.parameters.end.tsx",
+					"punctuation.definition.parameters.end.ts"
 				],
 				"settings": {
-					"foreground": "#A0A0A0"
+					"foreground": "#7e92c5" // nord4: for control flow keywords
 				}
 			},
 			{
-				"name": "CSS ID's",
-				"scope": ["source.sass keyword.control", "meta.attribute-selector.scss"],
+				"name": "Function names",
+				"scope": ["entity.name.function.tsx", "entity.name.function.ts"],
 				"settings": {
-					"foreground": "#ffffff"
-				}
-			},
-			{
-				"name": "Inserted",
-				"scope": ["markup.inserted"],
-				"settings": {
-					"foreground": "#ffffff"
+					"foreground": "#c8c8c8" // nord4: for function names
 				}
 			}
 		]
