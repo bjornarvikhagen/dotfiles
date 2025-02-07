@@ -1,0 +1,53 @@
+#!/bin/bash
+# minimal neofetch config with expanded color palette
+
+# color definitions
+reset="\033[0m"
+black="\033[38;5;0m"
+red="\033[38;5;1m"
+green="\033[38;5;2m"
+blue="\033[38;5;4m"
+magenta="\033[38;5;5m"
+cyan="\033[38;5;6m"
+white="\033[38;5;7m"
+gray="\033[38;5;243m"
+
+# color aliases for info sections
+cl0="${reset}"
+cl1="${blue}"    # headers
+cl2="${cyan}"    # labels
+cl3="${gray}"    # details
+cl4="${magenta}" # accents
+
+print_info() {
+    prin "\n"
+    info "${cl1}◆ ${cl2}user" title
+    prin "${cl4}┌─────────────────────────────────────────────────┐"
+
+    # added detailed ascii art
+    prin "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+    prin "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣦⣤⣴⣦⣤⣤⠀⣄⠀⠀⠀⠀⠀⠀⠀⠀"
+    prin "⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣤⣤⣴⣶⡟⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠉⢉⠟⠀⠀⠀⠀⠉⠛⣿⠛⠷⡄⣀⠀⠀⠀⠀"
+    prin "⠀⠀⠀⠀⢀⣤⠞⣻⠉⠉⠀⠀⠀⠈⢣⡀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⠐⠀⠀⠀⠀⣧⠀⡄⢉⡿⠀⠀⠀"
+    prin "⠀⠀⠀⣴⠋⠀⠀⡇⠀⠀⠀⠐⠀⠀⢸⡇⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠛⠀⠀⠤⣀⠀⠀⠀⢀⡟⠀⠀⠋⠀⠀⠀⠀"
+    prin "⠀⠀⠈⠈⠃⠀⠀⠧⠀⣀⠀⠠⠔⠊⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀"
+    prin "⠀⠀⠀⠀⠀⠀⠀⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+    prin "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+
+    # streamlined info display
+    info "${cl2}os" distro
+    info "${cl2}hw" model
+    info "${cl2}up" uptime
+    info "${cl2}pk" packages
+    info "${cl2}sh" shell
+    info "${cl2}wm" wm
+
+    prin "\n"
+    prin "\n"
+    prin "${cl4}└─────────────────────────────────────────────────┘"
+    prin "\n${cl1}▲ ${cl2}▼ ${cl3}▼"
+}
+
+# terminal colors
+colors=(4 5 6 7)
+ascii_colors=(4 5 6)
