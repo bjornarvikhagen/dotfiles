@@ -6,5 +6,5 @@
 apply:
 
 ```bash
-curl -o- https://raw.githubusercontent.com/bjornarvikhagen/dotfiles/main/install.sh | bash
+curl -o- https://raw.githubusercontent.com/bjornarvikhagen/dotfiles/main/apply.sh | bash
 ```
