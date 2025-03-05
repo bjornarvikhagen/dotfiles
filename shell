@@ -1,0 +1,58 @@
+```bash
+export NVM_DIR="$HOME/.nvm"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+export PATH=$NVM_DIR:$PATH
+# pnpm
+export PNPM_HOME="/Users/bjornarvikhagen/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+
+
+# BEGIN opam configuration
+# This is useful if you're using opam as it adds:
+#   - the correct directories to the PATH
+#   - auto-completion for the opam binary
+# This section can be safely removed at any time if needed.
+[[ ! -r '/Users/bjornarvikhagen/.opam/opam-init/init.zsh' ]] || source '/Users/bjornarvikhagen/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+# END opam configuration
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
+# bun completions
+[ -s "/Users/bjornarvikhagen/.bun/_bun" ] && source "/Users/bjornarvikhagen/.bun/_bun"
+
+# shortcuts
+alias shortcuts='echo "\033[1;36mShortcuts:\033[0m" && awk '"'"'
+  BEGIN { print ""; print "\033[1;34mShortcut\033[0m\t\033[1;34mDetails\033[0m" }
+  /^#/ { 
+    comment=$0; 
+    sub(/^# */, "", comment);
+  }
+  /^alias/ && !/^alias shortcuts=/ {
+    split($0, parts, "=");
+    shortcut=substr(parts[1], 7);
+    printf "\033[1;32m%-12s\033[0m    %s\n", shortcut, comment;
+  }
+'"'"' ~/.zshrc'
+# Navigate to personal projects directory
+alias personal='cd /Users/bjornarvikhagen/work/personal'
+# Open Dipai backend services in Cursor
+alias backend='cd /Users/bjornarvikhagen/work/dipai/be-services && cursor workspace.code-workspace'
+# Open Dipai portal backend in Cursor
+alias portal='cd /Users/bjornarvikhagen/work/dipai/portal && cursor backend.code-workspace'
+# run build-process for Dipai before merging
+alias build='cd /Users/bjornarvikhagen/work/Dipai && common/tools/build.ts'
+# restart zsh
+alias bump='source ~/.zshrc'
+# edit zshrc file
+alias editshell='cursor ~/.zshrc'
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+. "$HOME/.local/bin/env"
