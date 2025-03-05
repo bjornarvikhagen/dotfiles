@@ -1,34 +1,47 @@
-```bash
+# --- 󱄅 core config ---
 export NVM_DIR="$HOME/.nvm"
-  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
 
+# --- 🚀 path configuration ---
 export PATH=$NVM_DIR:$PATH
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
+# --- 📦 package managers ---
 # pnpm
 export PNPM_HOME="/Users/bjornarvikhagen/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-# pnpm end
 
-
-
-# BEGIN opam configuration
-# This is useful if you're using opam as it adds:
-#   - the correct directories to the PATH
-#   - auto-completion for the opam binary
-# This section can be safely removed at any time if needed.
-[[ ! -r '/Users/bjornarvikhagen/.opam/opam-init/init.zsh' ]] || source '/Users/bjornarvikhagen/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
-# END opam configuration
-export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
-
-# bun completions
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
 [ -s "/Users/bjornarvikhagen/.bun/_bun" ] && source "/Users/bjornarvikhagen/.bun/_bun"
 
-# shortcuts
-alias shortcuts='echo "\033[1;36mShortcuts:\033[0m" && awk '"'"'
-  BEGIN { print ""; print "\033[1;34mShortcut\033[0m\t\033[1;34mDetails\033[0m" }
+# opam
+[[ ! -r '/Users/bjornarvikhagen/.opam/opam-init/init.zsh' ]] || source '/Users/bjornarvikhagen/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+
+# --- 🎨 style config ---
+# enable color support
+autoload -U colors && colors
+export CLICOLOR=1
+export LSCOLORS=GxFxCxDxBxegedabagaced
+
+# --- ⚡️ performance tweaks ---
+# faster git completion
+__git_files () { 
+    _wanted files expl 'local files' _files
+}
+
+# --- 🛠 enhanced shortcuts ---
+# shortcuts display
+alias shortcuts='echo "\n\033[38;5;105m╭─── 󱃾 shortcuts ───╮\033[0m\n" && awk '"'"'
+  BEGIN { 
+    print "\033[38;5;147m  cmd        description\033[0m"
+    print "\033[38;5;60m  ─────────────────────────\033[0m"
+  }
   /^#/ { 
     comment=$0; 
     sub(/^# */, "", comment);
@@ -36,23 +49,71 @@ alias shortcuts='echo "\033[1;36mShortcuts:\033[0m" && awk '"'"'
   /^alias/ && !/^alias shortcuts=/ {
     split($0, parts, "=");
     shortcut=substr(parts[1], 7);
-    printf "\033[1;32m%-12s\033[0m    %s\n", shortcut, comment;
+    printf "\033[38;5;183m  %-10s\033[0m \033[38;5;248m%s\033[0m\n", shortcut, comment;
+  }
+  END {
+    print "\033[38;5;105m╰────────────────────╯\033[0m\n"
   }
 '"'"' ~/.zshrc'
+
+# --- 🏃 navigation ---
 # Navigate to personal projects directory
 alias personal='cd /Users/bjornarvikhagen/work/personal'
 # Open Dipai backend services in Cursor
 alias backend='cd /Users/bjornarvikhagen/work/dipai/be-services && cursor workspace.code-workspace'
 # Open Dipai portal backend in Cursor
 alias portal='cd /Users/bjornarvikhagen/work/dipai/portal && cursor backend.code-workspace'
+
+# --- 🔧 dev tools ---
 # run build-process for Dipai before merging
 alias build='cd /Users/bjornarvikhagen/work/Dipai && common/tools/build.ts'
 # restart zsh
 alias bump='source ~/.zshrc'
 # edit zshrc file
 alias editshell='cursor ~/.zshrc'
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+
+# --- 🚀 typescript/bun powertools ---
+
+# create new bun+ts project
+alias newts='f() { mkdir $1 && cd $1 && bun init -y && bun add -d typescript @types/node && echo '"'"'{ "compilerOptions": { "types": ["bun-types"], "module": "esnext", "target": "esnext", "moduleResolution": "bundler", "strict": true, "skipLibCheck": true } }'"'"' > tsconfig.json && bun add -d bun-types && mkdir src && touch src/index.ts && echo "created new bun+ts project: $1" }; f'
+
+
+
+# --- 🧹 git shortcuts ---
+# quick status
+alias gs='git status -sb'
+# pretty git log
+alias gl='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
+# undo last commit
+alias gundo='git reset --soft HEAD~1'
+
+
+
+
+
 
 . "$HOME/.local/bin/env"
+
+
+
+# --- 🔥 advanced git ---
+
+
+
+# nuke all local changes
+alias gnuke='git reset --hard && git clean -fd'
+
+
+
+
+# --- 💫 git flow ---
+# start new feature with jira ticket
+function ticket() {
+  local ticket=$1
+  local description=$2
+  git checkout -b "feature/${ticket,,}-${description// /-}"
+  git push -u origin "feature/${ticket,,}-${description// /-}"
+}
+
+# --- 🎵 end of config ---
+
