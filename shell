@@ -37,7 +37,7 @@ __git_files () {
 
 # --- 🛠 enhanced shortcuts ---
 # shortcuts display
-alias shortcuts='echo "\n\033[38;5;105m╭─── 󱃾 shortcuts ───╮\033[0m\n" && awk '"'"'
+alias shellcuts='echo "\n\033[38;5;105m╭─── 󱃾 shortcuts ───╮\033[0m\n" && awk '"'"'
   BEGIN { 
     print "\033[38;5;147m  cmd        description\033[0m"
     print "\033[38;5;60m  ─────────────────────────\033[0m"
@@ -87,16 +87,12 @@ alias gl='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %
 # undo last commit
 alias gundo='git reset --soft HEAD~1'
 
-
-
-
-
-
 . "$HOME/.local/bin/env"
 
+# run shellcuts on terminal launch
+shellcuts
 
-
-# --- 🔥 advanced git ---
+# --- �� advanced git ---
 
 
 
